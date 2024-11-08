@@ -62,3 +62,10 @@ class Bundle:
 # PRINT ALL
 BUNDLES=[Bundle(b) for b in BUNDLES]
 print(*BUNDLES)
+
+# Example Output:
+"""
+### **Level Leviathan**
+> `26` Joke Book
+> `22` Pet Feeder
+"""
