@@ -51,11 +51,20 @@ class Bundle:
 			have,total=nums.split("/")
 			have=have.replace(",","") if "," in have else have
 			total=total.replace(",","") if "," in total else total
-			need=int(total)-int(have)
-			need+=1 # To keep one of everything for collector
-			line=f"> `{need}` {item}"
-			new_lines.append(line)
+			need=int(total)-int(have)+1
+			#need+=1 # To keep one of everything for collector
+			if need !=0:
+				line=f"> `{abs(need)}` {item}"
+				new_lines.append(line)
 		return new_lines
+		
+	def get_extras(self,bundle_str):
+		extra_list=bundle_str.split(" <:CY:1071484103762915348> ")
+		extra_list.pop(0)
+		if len(extra_list)>0:
+			extras=self.build_list(extra_list)
+			extra_list=self.calculate(extras)
+		return extra_list
 		
 	def __repr__(self):
 		return str("\n".join([self.name]+self.lines)+"\n")
