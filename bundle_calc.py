@@ -24,6 +24,7 @@ class Bundle:
 	def __init__(self, bundle_str):
 		self.name,b_list=self.get_name(bundle_str)
 		self.lines=self.calculate(self.build_list(b_list))
+		self.extras=self.get_extras(bundle_str)
 		
 	def get_name(self,text:str):
 		split=text.split("**")
@@ -68,15 +69,24 @@ class Bundle:
 			extra_list=self.calculate(extras,extras=True)
 		return extra_list
 		
+		
 	def __repr__(self):
 		return str("\n".join([self.name]+self.lines)+"\n")
-		
-# PRINT ONE
-#print(Bundle(bundle))
 
-# PRINT ALL
-BUNDLES=[Bundle(b) for b in BUNDLES]
+
+
+BUNDLES=[Bundle(b) for b in BUNDLES if len(b.lstrip())>0]
 print(*BUNDLES)
+
+
+def print_extras():
+	EXTRAS=[b.extras for b in BUNDLES if len(b.extras) >0]
+	new_list=[]
+	for l in EXTRAS:
+		new_list+=l
+	print("EXTRA:",*new_list,sep="\n")
+
+print_extras()
 
 # Example Output:
 ## Shows needed amount (+1 for collector) and item
