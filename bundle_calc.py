@@ -43,7 +43,7 @@ class Bundle:
 			lines.append(" ".join(line))
 		return lines
 		
-	def calculate(self,lines):
+	def calculate(self,lines,extras=False):
 		new_lines=[]
 		for line in lines:
 			line=line.replace("`","").lstrip()
@@ -51,10 +51,12 @@ class Bundle:
 			have,total=nums.split("/")
 			have=have.replace(",","") if "," in have else have
 			total=total.replace(",","") if "," in total else total
-			need=int(total)-int(have)+1
-			#need+=1 # To keep one of everything for collector
-			if need !=0:
-				line=f"> `{abs(need)}` {item}"
+			need=int(total)-int(have)
+			if not extras:
+				need+=1 # To keep one of everything for collector
+			else: need=need*-1-1
+			if need >0:
+				line=f"> `{need}` {item}"
 				new_lines.append(line)
 		return new_lines
 		
@@ -63,7 +65,7 @@ class Bundle:
 		extra_list.pop(0)
 		if len(extra_list)>0:
 			extras=self.build_list(extra_list)
-			extra_list=self.calculate(extras)
+			extra_list=self.calculate(extras,extras=True)
 		return extra_list
 		
 	def __repr__(self):
