@@ -22,19 +22,20 @@ BUNDLES.append(bundle) # Adds bundle to list of BUNDLES
 # Bundle Class
 class Bundle:
 	def __init__(self, bundle_str):
-		self.name,text=self.get_name(bundle_str)
-		self.lines=self.calculate(self.build_list(text))
+		self.name,b_list=self.get_name(bundle_str)
+		self.lines=self.calculate(self.build_list(b_list))
 		
-	def get_name(self, bundle_text: str):
-		text=bundle_text.split(" <:CX:1071484097957994587> ")
-		removed=text.pop(0)
-		name=removed.split("\n")[-2]
-		name="### "+name.split("[")[0]
-		return name,text
+	def get_name(self,text:str):
+		split=text.split("**")
+		name="**"+split[-2]+"**"
+		contents=split[-1]
+		b_list=contents.split(" <:CX:1071484097957994587> ")
+		b_list.pop(0)
+		return name,b_list
 		
-	def build_list(self,text):
+	def build_list(self,b_list:list):
 		lines=[]
-		for line in text:
+		for line in b_list:
 			line=line.split("\n")[0].split(" ")
 			for word in line:
 				if word.startswith("<") and word.endswith(">"):
@@ -58,7 +59,7 @@ class Bundle:
 		
 	def __repr__(self):
 		return str("\n".join([self.name]+self.lines)+"\n")
-
+		
 # PRINT ONE
 #print(Bundle(bundle))
 
